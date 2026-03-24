@@ -1,9 +1,9 @@
 # Expert Coding Skills
 
-面向中文开发者的生产级 AI Agent 技能集，覆盖代码审查、安全审计、TDD、需求工程、架构设计、调试与技能创建全流程。
+面向中文开发者的生产级 AI Agent 技能集，覆盖代码审查、代码安全审计、TDD、需求工程、架构设计、调试与技能创建全流程。
 
 <p align="center">
-  <img src="https://img.shields.io/badge/技能数量-10-blue" alt="10 Skills" />
+  <img src="https://img.shields.io/badge/技能数量-9-blue" alt="9 Skills" />
   <img src="https://img.shields.io/badge/语言-中文-red" alt="Chinese" />
   <img src="https://img.shields.io/badge/License-MIT-yellow" alt="MIT License" />
 </p>
@@ -13,7 +13,6 @@
 | 技能 | 描述 | 触发方式 | 安装命令 |
 |------|------|----------|----------|
 | [**代码审查专家**](./skills/code-review-expert/) | 资深工程师视角的结构化代码审查，覆盖 SOLID、安全、性能、边界条件 | `/代码审查` | `npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/code-review-expert` |
-| [**安全审计专家**](./skills/security-audit/) | 白盒静态分析，10 个安全维度，三种扫描模式 | `/安全审计` | `npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/security-audit` |
 | [**代码安全审计专家**](./skills/code-security-audit/) | 深度数据流分析 + 五阶段审计协议 + 攻击链分析，WooYun 案例库，支持 9 种语言 | `/代码安全审计` | `npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/code-security-audit` |
 | [**TDD 开发大师**](./skills/tdd-master/) | 严格 RED-GREEN-REFACTOR，竖向切片，接口设计优先 | `/tdd` | `npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/tdd-master` |
 | [**需求工程师**](./skills/prd-engineer/) | 访谈驱动的 PRD 编写 + GitHub Issues 拆解 + 实施计划 | `/写PRD` | `npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/prd-engineer` |
@@ -30,9 +29,6 @@
 ```bash
 # 安装代码审查专家
 npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/code-review-expert
-
-# 安装安全审计专家
-npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/security-audit
 
 # 安装代码安全审计专家
 npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/code-security-audit
@@ -63,7 +59,6 @@ npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/brainstormin
 
 ```
 /代码审查          # 审查当前 git 变更
-/安全审计          # 对项目进行安全扫描
 /代码安全审计      # 深度白盒代码安全审计（五阶段协议）
 /tdd              # 启动 TDD 开发流程
 /写PRD            # 编写产品需求文档
