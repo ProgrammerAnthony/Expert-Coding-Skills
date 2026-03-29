@@ -6,12 +6,7 @@ readStdin().then(raw => {
     const claudeInput = transformToClaude(input, {
       tool_input: { file_path: input.path || input.file || '' }
     });
-    const claudeStr = JSON.stringify(claudeInput);
-
-    // 依次运行：格式化、类型检查、console.log 警告
-    runExistingHook('post-edit-format.js', claudeStr);
-    runExistingHook('post-edit-typecheck.js', claudeStr);
-    runExistingHook('post-edit-console-warn.js', claudeStr);
+    runExistingHook('post-edit-format.js', JSON.stringify(claudeInput));
   } catch {}
   process.stdout.write(raw);
 }).catch(() => process.exit(0));

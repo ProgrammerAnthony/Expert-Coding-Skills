@@ -11,6 +11,16 @@
           }
         ],
         "description": "读取 .env/.key/.pem 等敏感文件时发出警告"
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hooks/config-protection.js"
+          }
+        ],
+        "description": "阻止修改 eslint/prettier 等代码规范配置文件"
       }
     ],
     "PostToolUse": [
@@ -19,10 +29,20 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node scripts/hooks/post-edit-checks.js"
+            "command": "node scripts/hooks/post-edit-format.js"
           }
         ],
-        "description": "编辑 JS/TS 文件后检查 console.log 语句"
+        "description": "编辑 JS/TS 文件后自动运行 Prettier/Biome 格式化"
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hooks/post-edit-typecheck.js"
+          }
+        ],
+        "description": "编辑 TS 文件后自动运行 tsc --noEmit 类型检查"
       }
     ],
     "Stop": [
@@ -35,6 +55,60 @@
           }
         ],
         "description": "每次响应后扫描 transcript 中遗留的 API Key / Token 等敏感凭证"
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hooks/check-console-log.js"
+          }
+        ],
+        "description": "检查已修改的 JS/TS 文件中遗留的 console.log 语句"
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hooks/session-end.js"
+          }
+        ],
+        "description": "保存当前会话摘要到 ~/.claude/session-data/"
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hooks/cost-tracker.js"
+          }
+        ],
+        "description": "记录 token 用量和估算费用到 ~/.claude/metrics/costs.jsonl"
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hooks/session-start.js"
+          }
+        ],
+        "description": "会话开始时加载上次会话摘要，检测项目类型"
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hooks/pre-compact.js"
+          }
+        ],
+        "description": "context 压缩前保存状态，防止重要信息丢失"
       }
     ]
   }

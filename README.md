@@ -3,7 +3,7 @@
 面向中文开发者的生产级 AI Agent 技能集，覆盖代码审查、代码安全审计、TDD、需求工程、架构设计、调试、前端开发与技能创建全流程。
 
 <p align="center">
-  <img src="https://img.shields.io/badge/技能数量-12-blue" alt="12 Skills" />
+  <img src="https://img.shields.io/badge/技能数量-15-blue" alt="15 Skills" />
   <img src="https://img.shields.io/badge/语言-中文-red" alt="Chinese" />
   <img src="https://img.shields.io/badge/License-MIT-yellow" alt="MIT License" />
 </p>
@@ -24,26 +24,38 @@
 | [**React 最佳实践专家**](./skills/react-best-practices/) | React/Next.js 全场景开发指导，覆盖组件设计、Hooks 规范、状态管理选型、性能优化 | `/react最佳实践` | `npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/react-best-practices` |
 | [**前端性能优化专家**](./skills/frontend-performance-optimization/) | 基于性能数据的精准瓶颈定位，覆盖 Web Vitals、加载优化、运行时优化、打包体积优化 | `/前端性能优化` | `npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/frontend-performance-optimization` |
 | [**前端代码审查专家**](./skills/frontend-code-review/) | 前端专项代码审查，支持 React/Vue/Next.js/TypeScript，覆盖功能、性能、安全、可维护性六大维度 | `/前端代码审查` | `npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/frontend-code-review` |
+| [**AI Agent 安全专家**](./skills/ai-agent-security/) | AI Agent 安全审计，覆盖提示注入、工具滥用、权限越界等威胁 | `/agent安全审计` | `npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/ai-agent-security` |
+| [**API 设计专家**](./skills/api-design/) | RESTful/GraphQL API 设计规范，覆盖接口设计、版本管理、错误处理 | `/api设计` | `npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/api-design` |
+| [**文档查询**](./skills/docs-lookup/) | 通过 Context7 MCP 获取库和框架的实时最新文档，防止 API 幻觉 | 自动触发 | `npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/docs-lookup` |
 
 ## Cursor / Claude Code 配置体系
 
-本项目根目录的 `.cursor/` 目录提供了完整的 Cursor 配置，**克隆仓库即可直接使用，无需额外安装**：
+本项目构建了完整的双平台配置体系，**克隆仓库即可直接使用**：
 
 ```
-.cursor/
-├── hooks.json          # 自动化 hooks 配置（3 个安全检查）
-├── hooks/              # Cursor hook 适配脚本
-├── rules/              # 永久注入规则（每次对话自动生效）
-│   ├── common-*.md     # 通用规则（编码规范、安全、工作流、Git、测试）
-│   ├── typescript-*.md # TypeScript/JavaScript 专项规则
-│   ├── python-*.md     # Python 专项规则
-│   └── golang-*.md     # Go 专项规则
-└── skills/ → skills/   # 符号链接，所有技能自动可用
+项目根/
+├── .cursor/                    # Cursor 配置（克隆即用）
+│   ├── hooks.json              # 15 个 hook 事件配置
+│   ├── hooks/                  # Cursor 适配层脚本（调用 scripts/hooks/）
+│   ├── rules/                  # 永久注入规则（每次对话自动生效）
+│   │   ├── common-*.md         # 通用规则：编码、安全、工作流、Git、测试、Agents、模式、性能
+│   │   ├── typescript-*.md     # TypeScript/JavaScript 专项规则
+│   │   ├── python-*.md         # Python 专项规则
+│   │   └── golang-*.md         # Go 专项规则
+│   └── skills/                 # 全部 15 个技能（真实目录，内容与 skills/ 一致）
+│
+├── hooks/                      # Claude Code 配置（仅配置文件）
+│   ├── hooks.json              # Claude Code hooks 配置
+│   └── README.md               # 安装说明
+│
+└── scripts/                    # 所有 hook 逻辑脚本（Cursor 和 Claude Code 共用）
+    ├── lib/                    # 工具库（utils、resolve-formatter、shell-split 等）
+    └── hooks/                  # 核心 hook 脚本
 ```
 
 ### Rules（永久规则）
 
-`alwaysApply: true` 的规则在每次对话中自动生效；语言专项规则（`alwaysApply: false`）仅在匹配对应文件类型时激活：
+`alwaysApply: true` 的规则在每次对话中自动生效；语言专项规则仅在匹配文件类型时激活：
 
 | 规则文件 | 范围 | 内容 |
 |---------|------|------|
@@ -53,19 +65,29 @@
 | `common-git-workflow.md` | 全局 | Conventional Commits、PR 流程 |
 | `common-testing.md` | 全局 | 80% 覆盖率、TDD 强制工作流 |
 | `common-hooks.md` | 全局 | Hooks 系统说明 |
-| `typescript-*.md` | `*.ts/tsx/js/jsx` | TS 不可变性、Zod 验证、Vitest |
-| `python-*.md` | `*.py/pyi` | PEP8、pytest、ruff、bandit |
-| `golang-*.md` | `*.go` | gofmt、表驱动测试、gosec |
+| `common-agents.md` | 全局 | 按场景选用技能、并行执行、多视角分析 |
+| `common-patterns.md` | 全局 | 仓库模式、API 响应格式 |
+| `common-performance.md` | 全局 | 模型选择策略、context 管理 |
+| `typescript-*.md` | `*.ts/tsx/js/jsx` | TS 不可变性、Zod 验证、Vitest、hooks、patterns |
+| `python-*.md` | `*.py/pyi` | PEP8、pytest、ruff、bandit、hooks、patterns |
+| `golang-*.md` | `*.go` | gofmt、表驱动测试、gosec、hooks、patterns |
 
-### Hooks（自动化安全检查）
+### Hooks（自动化检查）
 
-| Hook | 触发时机 | 功能 |
-|------|---------|------|
-| `check-secrets` | 提交提示词前 | 检测 API Key、Token、私钥等敏感凭证 |
-| `warn-sensitive-file` | 读取文件前 | 读取 `.env`、`.key`、`.pem` 等敏感文件时警告 |
-| `post-edit-checks` | 编辑文件后 | 检测 JS/TS 文件中遗留的 `console.log` |
+| Hook | Cursor 事件 | Claude Code 事件 | 功能 |
+|------|------------|-----------------|------|
+| `check-secrets` | `beforeSubmitPrompt` | `Stop` | 检测 API Key / Token / 私钥 |
+| `warn-sensitive-file` | `beforeReadFile` | `PreToolUse Read` | 读取 `.env`/`.key`/`.pem` 时警告 |
+| `config-protection` | — | `PreToolUse Edit` | 阻止修改 eslint/prettier 配置 |
+| `post-edit-format` | `afterFileEdit` | `PostToolUse Edit` | 自动运行 Prettier/Biome 格式化 |
+| `post-edit-typecheck` | `afterFileEdit` | `PostToolUse Edit` | 编辑 TS 文件后运行 tsc 类型检查 |
+| `check-console-log` | `stop` | `Stop` | 检测遗留的 `console.log` 语句 |
+| `session-start` | `sessionStart` | `SessionStart` | 加载上次会话摘要，检测项目类型 |
+| `session-end` | `stop` | `Stop` | 保存当前会话摘要到 `~/.claude/` |
+| `pre-compact` | `preCompact` | `PreCompact` | context 压缩前保存状态 |
+| `cost-tracker` | `stop` | `Stop` | 记录 token 用量和费用 |
 
-Hooks 同时支持 **Claude Code**（见 [`hooks/hooks.json`](./hooks/hooks.json)）和 **Cursor**（见 [`.cursor/hooks.json`](./.cursor/hooks.json)）。详细说明见 [`hooks/README.md`](./hooks/README.md)。
+详细说明见 [`hooks/README.md`](./hooks/README.md)。
 
 ---
 
@@ -109,6 +131,15 @@ npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/frontend-per
 
 # 安装前端代码审查专家
 npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/frontend-code-review
+
+# 安装 AI Agent 安全专家
+npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/ai-agent-security
+
+# 安装 API 设计专家
+npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/api-design
+
+# 安装文档查询
+npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/docs-lookup
 ```
 
 安装后，在 Agent 终端中使用斜杠命令触发：
@@ -126,6 +157,8 @@ npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/frontend-cod
 /react最佳实践    # React/Next.js 开发指导、代码规范、性能优化
 /前端性能优化      # 前端页面性能诊断与优化方案
 /前端代码审查      # 前端项目代码质量全维度审查
+/agent安全审计    # AI Agent 安全威胁分析与防御
+/api设计          # API 接口设计规范与最佳实践
 ```
 
 ## 设计理念
@@ -140,6 +173,7 @@ npx skills add ProgrammerAnthony/Expert-Coding-Skills --path skills/frontend-cod
 
 本项目灵感来源于以下优秀开源项目，在此致以诚挚感谢：
 
+- [everything-claude-code](https://github.com/hesreallyhim/everything-claude-code) — 提供了完整的 hooks、rules、skills 配置体系架构的参考思路
 - [Anything-Extract](https://github.com/ProgrammerAnthony/Anything-Extract) — 提供了 TDD、PRD、架构文档等完整技能体系
 - [superpowers](https://github.com/obra/superpowers) — 提供了头脑风暴、系统调试、TDD 铁律等核心工作流思想
 - [skill-dfyx_code_security_review](https://github.com/EastSword/skill-dfyx_code_security_review) — 提供了专业的代码安全审计方法论
